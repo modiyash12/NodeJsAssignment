@@ -2,21 +2,20 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { databaseConnection } = require('./config');
 const productRoutes = require('./router/productRoute')
-const loggingMiddleware = require('./middleware/loggingMiddleware')
-const errorHandlerMiddleware = require('./middleware/errorHandlingMiddleware')
 const userAuthentication = require('./middleware/authenticationMiddleWare')
+const logging = require('./middleware/loggingMiddleware')
+const errors = require('./middleware/errorHandlingMiddleware')
+
 
 const app = express();
 const port = 3000;
 
-// Logging Middleware
-app.use(loggingMiddleware);
-
-// Error Handling Middleware
-app.use(errorHandlerMiddleware);
-
 app.use(bodyParser.json());
-app.use('/product', userAuthentication, productRoutes)
+app.use(logging);
+app.use(errors);
+
+
+app.use('/product',userAuthentication, productRoutes)
 databaseConnection()
 
 
