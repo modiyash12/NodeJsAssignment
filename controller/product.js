@@ -1,4 +1,3 @@
-// itemController.js
 
 const product = require('../modal/productSchema');
 
